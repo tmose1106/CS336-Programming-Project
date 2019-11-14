@@ -1,6 +1,10 @@
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +28,30 @@ public class LoginServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    private static boolean validate(String username, String password) {
+    	Connection connection = DatabaseUtil.getConnection();
+    	
+    	PreparedStatement ps;
+		
+    	try {
+    		// Create a prepared statement, for substituting in values
+			ps = connection.prepareStatement(
+				"SELECT * FROM users WHERE user_name = ? AND user_pass = ?;");
+			
+	    	ps.setString(1, username);
+	    	ps.setString(2, password);
+	    	
+	    	ResultSet rs = ps.executeQuery();
+	    	
+	    	// next() returns a boolean saying if there are more rows in the set
+	    	return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return false;
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -38,7 +66,9 @@ public class LoginServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
-        if (password.equals("admin123")) {
+        if (validate(name, password)) {
+        	//  If valid credentials, redirect to profile page and
+        	// add name to session 
         	response.sendRedirect("profile.jsp");
         	
         	HttpSession session = request.getSession(true);  
@@ -46,6 +76,8 @@ public class LoginServlet extends HttpServlet {
         	session.setAttribute("name", name);
         }  
         else {
+        	//  If invalid, set error message and forward back to login
+        	// page
         	request.setAttribute("errorMessage", "Invalid credentials!");
         	
         	request.getRequestDispatcher("/login.jsp").forward(request, response);
