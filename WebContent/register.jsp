@@ -9,13 +9,21 @@
 <body>
 	<div style="color: #FF0000;">${errorMessage}</div>
     <form action="RegisterServlet" method="post">  
-	    <label for="name">Name:</label>
-	    <input type="text" name="name">
+	    <label for="username">Username:</label>
+	    <input type="text" name="username">
 	    <br>
 	    <label for="password">Password:</label>
 	    <input type="password" name="password">
+	    <br>
+	    <label for="passsword2">Renter Password:</label>
+	    <input type="password" name="password2">
 	    <br>  
-	    <input type="submit" value="Register">  
+	    <label for="name">Name:</label>
+	    <input type="text" name="name">
+	    <br>  
+	    <input type="submit" value="Register"> 
+	    <p>Click "Home" to go to Home Page</p>
+		<button><a href="/servlet-demo">Home</a></button> 
     </form>
 
 </body>

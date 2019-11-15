@@ -9,13 +9,15 @@
 <body>
 	<div style="color: #FF0000;">${errorMessage}</div>
     <form action="LoginServlet" method="post">  
-	    <label for="name">Name:</label>
+	    <label for="name">Username:</label>
 	    <input type="text" name="name">
 	    <br>
 	    <label for="password">Password:</label>
 	    <input type="password" name="password">
 	    <br>  
-	    <input type="submit" value="login">  
+	    <input type="submit" value="Login">
+	    <p>Click "Home" to go to Home Page</p>
+		<button><a href="/servlet-demo">Home</a></button> 
     </form>
 </body>
 </html>
