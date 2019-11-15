@@ -72,7 +72,7 @@ public class RegisterServlet extends HttpServlet {
         	request.getRequestDispatcher("/register.jsp").forward(request, response);
         }  
         
-        else if (username.length()<4|password.length()>20)
+        else if (username.length()<4|username.length()>20)
         {
         	// If invalid, set error message and forward back to register page
         	request.setAttribute("errorMessage", "Username must be 4 to 20 characters long");
@@ -80,7 +80,7 @@ public class RegisterServlet extends HttpServlet {
         	request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
         
-        else if (username.length()<1|password.length()>20)
+        else if (name.length()<1|name.length()>20)
         {
         	// If invalid, set error message and forward back to register page
         	request.setAttribute("errorMessage", "Please enter a valid name");
