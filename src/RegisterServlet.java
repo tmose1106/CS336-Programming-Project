@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -89,7 +88,7 @@ public class RegisterServlet extends HttpServlet {
         	request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
         
-        else if (password.equals(passwordConfirm))
+        else if (!password.equals(passwordConfirm))
         {
         	request.setAttribute("errorMessage", "Passwords do not match");
         	
