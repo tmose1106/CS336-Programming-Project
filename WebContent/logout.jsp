@@ -7,9 +7,10 @@
 <title>Demo| Logout</title>
 </head>
 <body>
+	<header>
+		<a href="/">Home</a>
+	</header>
 	<% session.invalidate(); %>
 	<p>You have been logged out.</p>
-	<p>Click "Home" to go to Home Page</p>
-	<button><a href="/servlet-demo">Home</a></button> 
 </body>
 </html>

@@ -7,6 +7,11 @@
 <title>Demo | Login</title>
 </head>
 <body>
+	<header>
+		<a href="/">Home</a>
+	</header>
+	<h1>Login</h1>
+	<p>Please enter username and password to log in</p>
 	<div style="color: #FF0000;">${errorMessage}</div>
     <form action="LoginServlet" method="post">  
 	    <label for="name">Username:</label>
@@ -16,8 +21,6 @@
 	    <input type="password" name="password" maxlength="20">
 	    <br>  
 	    <input type="submit" value="Login">
-	    <p>Click "Home" to go to Home Page</p>
-		<button><a href="/servlet-demo">Home</a></button> 
     </form>
 </body>
 </html>

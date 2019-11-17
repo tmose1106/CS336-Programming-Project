@@ -49,6 +49,23 @@ public class RegisterServlet extends HttpServlet {
     	return false;
     }
     
+    private static void add_user(String username, String password, String name) {
+    	Connection connection = DatabaseUtil.getConnection();
+    	
+    	try {
+    		PreparedStatement ps = connection.prepareStatement(
+				"INSERT INTO users (user_name, user_pass, person_name) values(?, ?, ?);");
+
+	    	ps.setString(1, username);
+	    	ps.setString(2, password);
+	    	ps.setString(3, name);
+	    	
+	    	ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -62,77 +79,29 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {          
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String password2 = request.getParameter("password2");
+        String passwordConfirm = request.getParameter("password-confirm");
         String name = request.getParameter("name");
 
-        if(validate(username)) {
+        if (validate(username)) {
         	// If invalid, set error message and forward back to register page
         	request.setAttribute("errorMessage", "Username already taken!");
         	
         	request.getRequestDispatcher("/register.jsp").forward(request, response);
-        }  
-        
-        else if (username.length()<4|username.length()>20)
-        {
-        	// If invalid, set error message and forward back to register page
-        	request.setAttribute("errorMessage", "Username must be 4 to 20 characters long");
-        	
-        	request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
         
-        else if (name.length()<1|name.length()>20)
+        else if (password.equals(passwordConfirm))
         {
-        	// If invalid, set error message and forward back to register page
-        	request.setAttribute("errorMessage", "Please enter a valid name");
-        	
-        	request.getRequestDispatcher("/register.jsp").forward(request, response);
-        }
-        
-        else if (password.length()<6|password.length()>20)
-        {
-        	// If invalid, set error message and forward back to register page
-        	request.setAttribute("errorMessage", "Password must be 6 to 20 characters long");
-        	
-        	request.getRequestDispatcher("/register.jsp").forward(request, response);
-        }
-        
-        
-        else if (password.compareTo(password2)!=0)
-        {
-        	// If invalid, set error message and forward back to register page
         	request.setAttribute("errorMessage", "Passwords do not match");
         	
         	request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
         
-        else {
-        	// If valid credentials, redirect to profile page and
-        	// add name to session 
+        else {        	
+        	response.sendRedirect("/success.html");
         	
-        	response.sendRedirect("success.jsp");
-        	
-        	Connection connection = DatabaseUtil.getConnection();
-        	PreparedStatement ps;
-        	
-        	try {
-                connection = DatabaseUtil.getConnection();
-				ps = connection.prepareStatement(
-						"INSERT INTO users (user_name, user_pass, person_name) values(?, ?, ?);");
+        	add_user(username, password, name);
 
-		    	ps.setString(1, username);
-		    	ps.setString(2, password);
-		    	ps.setString(3, name);
-		    	ps.executeUpdate();
-		    	
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	
-        	HttpSession session = request.getSession(true);  
-        	
+        	// HttpSession session = request.getSession(true);  
         }  
 	}
-
-
 }

@@ -7,24 +7,24 @@
 <title>Demo | Register</title>
 </head>
 <body>
+	<header>
+		<a href="/">Home</a>
+	</header>
+	<h1>Register</h1>
+	<p>Please enter a username, full name and password to register</p>
 	<div style="color: #FF0000;">${errorMessage}</div>
     <form action="RegisterServlet" method="post">  
 	    <label for="username">Username:</label>
-	    <input type="text" name="username" maxlength="20">
+	    <input type="text" name="username" required minlength="4" maxlength="20">
+	    <label for="name">Full Name:</label>
+	    <input type="text" name="name" required minlength="1" maxlength="20">
 	    <br>
 	    <label for="password">Password:</label>
-	    <input type="password" name="password" maxlength="20">
+	    <input type="password" name="password" required minlength="4" maxlength="20">
+	    <label for="passsword-confirm">Confirm Password:</label>
+	    <input type="password" name="password-confirm" required minlength="4" maxlength="20">
 	    <br>
-	    <label for="passsword2">Renter Password:</label>
-	    <input type="password" name="password2" maxlength="20">
-	    <br>  
-	    <label for="name">Name:</label>
-	    <input type="text" name="name" maxlength="20">
-	    <br>  
-	    <input type="submit" value="Register"> 
-	    <p>Click "Home" to go to Home Page</p>
-		<button><a href="/servlet-demo">Home</a></button> 
+	    <input type="submit" value="Register">
     </form>
-
 </body>
 </html>
