@@ -8,8 +8,8 @@ Michael Truong (mt842, Section 6)
 */
 
 -- Create database
-CREATE DATABASE IF NOT EXISTS tripBooker;
-USE tripBooker;
+CREATE SCHEMA IF NOT EXISTS `cs336`;
+USE `cs336`;
 
 -- Drop preexisting tables
 DROP TABLE IF EXISTS admins;
