@@ -7,15 +7,20 @@
 <title>Demo | Login</title>
 </head>
 <body>
+	<header>
+		<a href="/">Home</a>
+	</header>
+	<h1>Login</h1>
+	<p>Please enter username and password to log in</p>
 	<div style="color: #FF0000;">${errorMessage}</div>
     <form action="LoginServlet" method="post">  
-	    <label for="name">Name:</label>
-	    <input type="text" name="name">
+	    <label for="name">Username:</label>
+	    <input type="text" name="name" maxlength="20">
 	    <br>
 	    <label for="password">Password:</label>
-	    <input type="password" name="password">
+	    <input type="password" name="password" maxlength="20">
 	    <br>  
-	    <input type="submit" value="login">  
+	    <input type="submit" value="Login">
     </form>
 </body>
 </html>

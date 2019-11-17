@@ -14,14 +14,14 @@
 	        	String name = (String) session.getAttribute("name");
 	        	out.print("Hello, " + name + ".  Welcome to your Profile!");
 	        } else {
-	        	response.sendRedirect("/servlet-demo/LoginServlet");
+	        	response.sendRedirect("/LoginServlet");
 	        }
 	    }
 	    else {
-	    	response.sendRedirect("/servlet-demo/LoginServlet");
+	    	response.sendRedirect("/LoginServlet");
 	    }
 	%>
 	</p>
-	<button><a href="/servlet-demo/logout.jsp">Log Out</a></button>
+	<button><a href="/logout.jsp">Log Out</a></button>
 </body>
 </html>

@@ -7,6 +7,9 @@
 <title>Demo| Logout</title>
 </head>
 <body>
+	<header>
+		<a href="/">Home</a>
+	</header>
 	<% session.invalidate(); %>
 	<p>You have been logged out.</p>
 </body>
