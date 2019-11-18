@@ -8,7 +8,7 @@
 </head>
 <body>
 	<header>
-		<a href="/">Home</a>
+		<a href="/servlet-demo">Home</a>
 	</header>
 	<% session.invalidate(); %>
 	<p>You have been logged out.</p>

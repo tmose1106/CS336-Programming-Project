@@ -96,7 +96,7 @@ public class RegisterServlet extends HttpServlet {
         }
         
         else {        	
-        	response.sendRedirect("/success.html");
+        	response.sendRedirect("/servlet-demo/success.html");
         	
         	add_user(username, password, name);
 

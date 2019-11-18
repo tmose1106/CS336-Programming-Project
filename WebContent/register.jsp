@@ -8,7 +8,7 @@
 </head>
 <body>
 	<header>
-		<a href="/">Home</a>
+		<a href="/servlet-demo">Home</a>
 	</header>
 	<h1>Register</h1>
 	<p>Please enter a username, full name and password to register</p>
