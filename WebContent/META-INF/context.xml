@@ -6,8 +6,8 @@
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="org.mariadb.jdbc.Driver"
-		url="jdbc:mariadb://localhost:3306/tripBooker"
-		username="root"
-		password="root"
+		url="jdbc:mariadb://cs336.cm0xo0izqdao.us-east-2.rds.amazonaws.com:3306/cs336"
+		username="admin"
+		password="adminadmin"
 	/>
 </Context>
