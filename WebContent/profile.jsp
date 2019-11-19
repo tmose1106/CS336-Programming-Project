@@ -22,6 +22,6 @@
 	    }
 	%>
 	</p>
-	<button><a href="/logout.jsp">Log Out</a></button>
+	<button><a href="/servlet-demo/logout.jsp">Log Out</a></button>
 </body>
 </html>
