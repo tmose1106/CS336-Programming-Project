@@ -9,5 +9,6 @@
 		url="jdbc:mariadb://cs336.cm0xo0izqdao.us-east-2.rds.amazonaws.com:3306/cs336"
 		username="admin"
 		password="adminadmin"
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory"
 	/>
 </Context>
