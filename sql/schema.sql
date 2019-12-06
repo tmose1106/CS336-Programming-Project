@@ -37,18 +37,33 @@ CREATE TABLE users (
     person_name VARCHAR(20),
     PRIMARY KEY (user_name));
 
+-- add data to users
+LOCK TABLES users WRITE;
+INSERT INTO users VALUES ('tm123', 'adminadmin', 'Ted Moseley'), ('hjl40', 'soap123', 'Hannah Lords'), ('sc123', 'adminadmin', 'Sadhana Chidambaran'), ('tm321', 'cs336', 'Michael Truong'), ('admin', 'adminadmin', NULL), ('customer1', 'cust1', 'Sally Smith'), ('customer2', 'cust2', 'Alex Shu'), ('customer3', 'cust3', NULL), ('cust_rep1', 'cust_rep1', 'Jonathan VanWick'), ('cust_rep2', 'cust_rep2', NULL), ('cust_rep3', 'cust_rep3', 'Vanessa Hues'), ('otheradmin', 'otheradmin', 'Person McPerson');
+UNLOCK TABLES;
+
 -- Create admin entity
 CREATE TABLE admins (
 	user_name VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_name) REFERENCES users(user_name),
     PRIMARY KEY (user_name));
 
+--add data to admins
+LOCK TABLES admins WRITE;
+INSERT INTO users VALUES ('tm123'), ('hjl40'), ('tm321'), ('admin'), ('otheradmin');
+UNLOCK TABLES;
+
 -- Create customer representative entity
 CREATE TABLE customer_reps (
 	user_name VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_name) REFERENCES users(user_name),
     PRIMARY KEY (user_name));
-    
+
+-- add data to customer_reps
+LOCK TABLES customer_reps WRITE;
+INSERT INTO customer_reps VALUES ('hjl40'), ('sc123'), ('cust_rep1'), ('cust_rep2'), ('cust_rep3');
+UNLOCK TABLES;
+
 -- Create customer entity
 CREATE TABLE customers (
 	user_name VARCHAR(20) NOT NULL,
