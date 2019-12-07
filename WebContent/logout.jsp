@@ -12,5 +12,6 @@
 	</header>
 	<% session.invalidate(); %>
 	<p>You have been logged out.</p>
+	<input type="button" value="Home" onclick="window.location='/servlet-demo/'" >
 </body>
 </html>
