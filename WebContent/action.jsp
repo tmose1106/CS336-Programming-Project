@@ -9,7 +9,8 @@
 <body>
 	<%
 		String choice = request.getParameter("choice");
-		response.sendRedirect("/servlet-demo/" + choice);
+		String command = request.getParameter("command");
+		response.sendRedirect("/servlet-demo/" + command + choice);
 	%>
 </body>
 </html>

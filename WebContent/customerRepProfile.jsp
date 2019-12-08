@@ -13,7 +13,7 @@
 	    if (session != null) {
 	        if (session.getAttribute("name") != null) {
 	        	String name = (String) session.getAttribute("name");
-	        	out.print("Hello, " + name + ".  Welcome to your Profile!");
+	        	out.print("Hello, " + name + ",  welcome to your Profile!");
 	        } else {
 	        	response.sendRedirect("/servlet-demo/LoginServlet");
 	        }
@@ -24,28 +24,37 @@
 	%>
 	</p>
 	<br>
-	<form method="post" action="action.jsp">
-		<select name="choice" size=1>
-			<option value="addAirport.jsp">Airport</option>
-			<option value="addAircraft.jsp">Aircraft</option>
-			<option value="addFlight.jsp">Flight</option>
-		</select>&nbsp;<br> <input type="submit" value="Add">
+	<p><b>Make or Edit a Reservation for a Customer</b></p>
+	<form method="post" action="ReservationServlet">
+		<p> Please Select whether you want to make or edit as reservation and indicate the user the reservation is for.</p>
+		<input type="radio" name="command" value="make"/> Make
+		<input type="radio" name="command" value="edit"/> Edit
+		<br>
+		<label for="userID">User ID:</label>
+	    <input type="text" name="userID" required maxlength="20">
+	    <br>
+		<input type="submit" value="Go">
 	</form>
 	<br>
-	<form method="post" action="action.jsp">
-		<select name="choice" size=1>
-			<option value="editAirport.jsp">Airport</option>
-			<option value="editAircraft.jsp">Aircraft</option>
-			<option value="editFlight.jsp">Flight</option>
-		</select>&nbsp;<br> <input type="submit" value="Edit">
+	<p><b>Retrieve Wait-list for a Flight</b></p>
+	<form method="post" action="WaitListServlet">
+		<label for="flightID">Flight ID:</label>
+	    <input type="number" step=1 name="flightID" pattern="\d+" required min=1>
+	    <input type="submit" value="Go">
 	</form>
 	<br>
+	<p><b>Manipulate the Database</b></p>
 	<form method="post" action="action.jsp">
+		<p>Please select what part of the database you want to change and how you want to change it<p>
 		<select name="choice" size=1>
-			<option value="deleteAirport.jsp">Airport</option>
-			<option value="deleteAircraft.jsp">Aircraft</option>
-			<option value="deleteFlight.jsp">Flight</option>
-		</select>&nbsp;<br> <input type="submit" value="Delete">
+			<option value="Aircraft.jsp">Aircraft</option>
+			<option value="Airport.jsp">Airport</option>
+			<option value="Flight.jsp">Flight</option>
+		</select>&nbsp;<br> <input type="radio" name="command" value="add" checked/> Add
+		<input type="radio" name="command" value="edit"/> Edit
+		<input type="radio" name="command" value="delete"/> Delete
+		<br>
+		<input type="submit" value="Go">
 	</form>
 	<br>
 	<br>
