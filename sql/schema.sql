@@ -99,7 +99,7 @@ UNLOCK TABLES;
 CREATE TABLE seats (
 	aircraft_id INT NOT NULL,
 	seat_num INT NOT NULL,
-    class VARCHAR(8),
+    class VARCHAR(8) NOT NULL,
 	CHECK (class = 'First' OR class = 'Buis' OR class = 'Econ'),
     FOREIGN KEY (aircraft_id) REFERENCES aircrafts(aircraft_id)
 		ON UPDATE CASCADE
@@ -107,10 +107,10 @@ CREATE TABLE seats (
     PRIMARY KEY (aircraft_id, seat_num));
 -- add data to seats
 LOCK TABLES seats WRITE;
-INSERT INTO seats VALUES (27, 1, 'First'), (27, 2, 'Buis'), (27, 3, 'Econ'), (27, 4, 'Econ'), (27, 0, NULL),
-	(13, 1, 'Econ'), (13, 2, 'Econ'), (13, 3, 'Econ'), (13, 4, 'Buis'), (13, 5, 'Buis'), (13, 6, 'First'), (13, 0, NULL),
-	(24, 1, 'Econ'), (24, 2, 'Econ'), (24, 3, 'Econ'), (24, 4, 'Buis'), (24, 5, 'Buis'), (24, 6, 'First'), (24, 0, NULL),
-	(9, 1, 'Econ'), (9, 2, 'Econ'), (9, 3, 'Econ'), (9, 4, 'Buis'), (9, 5, 'Buis'), (9, 6, 'First'), (9, 0, NULL);
+INSERT INTO seats VALUES (27, 1, 'First'), (27, 2, 'Buis'), (27, 3, 'Econ'), (27, 4, 'Econ'), (13, 1, 'Econ'), (13, 2, 'Econ'),
+	(13, 3, 'Econ'), (13, 4, 'Buis'), (13, 5, 'Buis'), (13, 6, 'First'), (24, 1, 'Econ'), (24, 2, 'Econ'), (24, 3, 'Econ'),
+	(24, 4, 'Buis'), (24, 5, 'Buis'), (24, 6, 'First'), (9, 1, 'Econ'), (9, 2, 'Econ'), (9, 3, 'Econ'), (9, 4, 'Buis'),
+	(9, 5, 'Buis'), (9, 6, 'First');
 UNLOCK TABLES;
 
 -- Create flights entity
