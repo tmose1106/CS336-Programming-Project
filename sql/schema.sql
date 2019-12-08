@@ -119,7 +119,7 @@ CREATE TABLE flights (
     flight_num INT NOT NULL,
     flight_type CHAR(8) NOT NULL,
 	CHECK (flight_type = 'Domestic' OR flight_type = 'Internat'),
-    flight_days VARCHAR(9),
+    flight_days VARCHAR(9) NOT NULL,
     depart DATETIME,
     arrival DATETIME,
     fare_first DOUBLE,
