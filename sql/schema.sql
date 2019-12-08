@@ -117,7 +117,8 @@ UNLOCK TABLES;
 CREATE TABLE flights (
 	airline_id CHAR(2) NOT NULL,
     flight_num INT NOT NULL,
-    flight_type VARCHAR(8),
+    flight_type CHAR(8) NOT NULL,
+	CHECK (flight_type = 'Domestic' OR flight_type = 'Internat'),
     flight_days VARCHAR(9),
     depart DATETIME,
     arrival DATETIME,
