@@ -59,7 +59,11 @@ CREATE TABLE tickets (
     issue_date DATETIME,
     total_fare DOUBLE, 
     user_name VARCHAR(20),
+	purchased_by VARCHAR(20),
     FOREIGN KEY (user_name) REFERENCES users(user_name)
+		ON UPDATE CASCADE
+		ON DELETE SET NULL,
+	FOREIGN KEY (purchased_by) REFERENCES users(user_name)
 		ON UPDATE CASCADE
 		ON DELETE SET NULL,
     PRIMARY KEY (ticket_num),
