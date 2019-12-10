@@ -1,20 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="cs336.DatabaseUtil" %>
-<%!
-Connection connection = null;
-PreparedStatement ps = null;
-%>
-<%
-connection = DatabaseUtil.getConnection();
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-ps = connection.prepareStatement("SELECT * FROM users;");
-
-ResultSet rs = ps.executeQuery();
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,12 +16,12 @@ ResultSet rs = ps.executeQuery();
 			</tr>
 		</thead>
 		<tbody>
-			<% while (rs.next()) { %>
-			<tr>
-				<td><a href="user.jsp?user_name=<%= rs.getString("user_name") %>"><%= rs.getString("person_name") %></a></td>
-				<td><%= rs.getString("user_name") %></td>
-			</tr>
-			<% } %>
+			<c:forEach var="row" items="${users}">
+				<tr>
+					<td><a href="User?user_name=${row.userName}">${row.userName}</a>
+					<td>${row.personName}</td>
+			    </tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </body>
