@@ -4,12 +4,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<<<<<<< HEAD
 <title>Insert title here</title>
 </head>
 <body>
 
-=======
 <title>Demo | Add Airport</title>
 </head>
 <body>
@@ -37,6 +35,5 @@
 	    <br>
 	    <input type="submit" value="Add Airport">
     </form>
->>>>>>> addAirport
 </body>
 </html>

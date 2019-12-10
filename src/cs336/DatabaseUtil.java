@@ -9,23 +9,19 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class DatabaseUtil {
-	static Connection connection = null;
+	static DataSource dataSource = null;
 	
 	static {
 		try {
 			Context context = new InitialContext();
 			
-			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/LoginDB");
-			
-			connection = dataSource.getConnection();
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/LoginDB");
 		} catch (NamingException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static Connection getConnection() {
-		return connection;
+	public static Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
 	}
 }

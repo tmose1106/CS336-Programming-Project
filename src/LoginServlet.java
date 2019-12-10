@@ -75,6 +75,30 @@ public class LoginServlet extends HttpServlet {
 		}
     	// If privilege column is NULL return lowest level privilege;
     	return "C";
+	}
+
+    private static boolean adminValidate(String username, String password) {
+    	Connection connection = DatabaseUtil.getConnection();
+    	
+    	PreparedStatement ps;
+		
+    	try {
+    		// Create a prepared statement, for substituting in values
+			ps = connection.prepareStatement(
+				"SELECT * FROM users WHERE user_name = ? AND user_pass = ? AND user_type = 'A';");
+			
+	    	ps.setString(1, username);
+	    	ps.setString(2, password);
+	    	
+	    	ResultSet rs = ps.executeQuery();
+	    	
+	    	// next() returns a boolean saying if there are more rows in the set
+	    	return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return false;
     }
     
 	/**
@@ -91,7 +115,16 @@ public class LoginServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
-        if (validate(name, password)) {
+        if (adminValidate(name, password)) {
+        	//  If valid credentials for an admin, redirect to admin profile page and
+        	// add name to session 
+        	response.sendRedirect("admin-profile.jsp");
+        	
+        	HttpSession session = request.getSession(true);  
+        	
+        	session.setAttribute("name", name);
+        }        
+        else if (validate(name, password)) {
         	//  If valid credentials, redirect to profile page and
         	// add name to session 
         	String userType = getPrivilegeType(name);
@@ -113,5 +146,4 @@ public class LoginServlet extends HttpServlet {
         	request.getRequestDispatcher("/login.jsp").forward(request, response);
         }  
 	}
-
 }
