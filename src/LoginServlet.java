@@ -52,6 +52,31 @@ public class LoginServlet extends HttpServlet {
     	return false;
     }
     
+    // Determine what the users privilege level is
+    private static String getPrivilegeType(String username) {
+    	Connection connection = DatabaseUtil.getConnection();
+    	
+    	PreparedStatement ps;
+    	
+    	try {
+    		ps = connection.prepareStatement("SELECT * FROM users WHERE user_name = ?;");
+    		
+    		ps.setString(1, username);
+    		
+    		ResultSet rs = ps.executeQuery();
+    		
+    		//Get the privilege
+    		if (rs.next()) {
+    			String access = rs.getString("user_type");
+    			return access;
+    		}
+    	} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	// If privilege column is NULL return lowest level privilege;
+    	return "C";
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -69,7 +94,12 @@ public class LoginServlet extends HttpServlet {
         if (validate(name, password)) {
         	//  If valid credentials, redirect to profile page and
         	// add name to session 
-        	response.sendRedirect("profile.jsp");
+        	String userType = getPrivilegeType(name);
+        	if (userType.equals("R")) {
+        		response.sendRedirect("customerRepProfile.jsp");
+        	} else {
+        		response.sendRedirect("profile.jsp");
+        	}
         	
         	HttpSession session = request.getSession(true);  
         	

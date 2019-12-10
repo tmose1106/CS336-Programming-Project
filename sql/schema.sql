@@ -58,8 +58,14 @@ CREATE TABLE tickets (
     booking_fee DOUBLE,
     issue_date DATETIME,
     total_fare DOUBLE, 
-    user_name VARCHAR(20) NOT NULL,
-    FOREIGN KEY (user_name) REFERENCES users(user_name),
+    user_name VARCHAR(20),
+	purchased_by VARCHAR(20),
+    FOREIGN KEY (user_name) REFERENCES users(user_name)
+		ON UPDATE CASCADE
+		ON DELETE SET NULL,
+	FOREIGN KEY (purchased_by) REFERENCES users(user_name)
+		ON UPDATE CASCADE
+		ON DELETE SET NULL,
     PRIMARY KEY (ticket_num),
     CHECK (round_trip = 0 OR round_trip = 1));
 -- add data to tickets
@@ -84,7 +90,9 @@ UNLOCK TABLES;
 CREATE TABLE aircrafts (
 	aircraft_id INT NOT NULL,
 	airline_id CHAR(2) NOT NULL,
-    FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),
+    FOREIGN KEY (airline_id) REFERENCES airlines(airline_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
     PRIMARY KEY (aircraft_id));
 -- add data to aircrafts
 LOCK TABLES aircrafts WRITE;
@@ -92,33 +100,37 @@ INSERT INTO aircrafts VALUES (27, 'DL'), (13, 'AA'), (24, 'NW'), (9, 'DL');
 UNLOCK TABLES;
 	
 -- Create seats entity
--- Zero means you're on the waitlist
 CREATE TABLE seats (
 	aircraft_id INT NOT NULL,
 	seat_num INT NOT NULL,
-    class VARCHAR(8),
+    class VARCHAR(8) NOT NULL,
 	CHECK (class = 'First' OR class = 'Buis' OR class = 'Econ'),
-    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(aircraft_id),
+    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(aircraft_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
     PRIMARY KEY (aircraft_id, seat_num));
 -- add data to seats
 LOCK TABLES seats WRITE;
-INSERT INTO seats VALUES (27, 1, 'First'), (27, 2, 'Buis'), (27, 3, 'Econ'), (27, 4, 'Econ'), (27, 0, NULL),
-	(13, 1, 'Econ'), (13, 2, 'Econ'), (13, 3, 'Econ'), (13, 4, 'Buis'), (13, 5, 'Buis'), (13, 6, 'First'), (13, 0, NULL),
-	(24, 1, 'Econ'), (24, 2, 'Econ'), (24, 3, 'Econ'), (24, 4, 'Buis'), (24, 5, 'Buis'), (24, 6, 'First'), (24, 0, NULL),
-	(9, 1, 'Econ'), (9, 2, 'Econ'), (9, 3, 'Econ'), (9, 4, 'Buis'), (9, 5, 'Buis'), (9, 6, 'First'), (9, 0, NULL);
+INSERT INTO seats VALUES (27, 1, 'First'), (27, 2, 'Buis'), (27, 3, 'Econ'), (27, 4, 'Econ'), (13, 1, 'Econ'), (13, 2, 'Econ'),
+	(13, 3, 'Econ'), (13, 4, 'Buis'), (13, 5, 'Buis'), (13, 6, 'First'), (24, 1, 'Econ'), (24, 2, 'Econ'), (24, 3, 'Econ'),
+	(24, 4, 'Buis'), (24, 5, 'Buis'), (24, 6, 'First'), (9, 1, 'Econ'), (9, 2, 'Econ'), (9, 3, 'Econ'), (9, 4, 'Buis'),
+	(9, 5, 'Buis'), (9, 6, 'First');
 UNLOCK TABLES;
 
 -- Create flights entity
 CREATE TABLE flights (
 	airline_id CHAR(2) NOT NULL,
     flight_num INT NOT NULL,
-    flight_type VARCHAR(8),
-    flight_days VARCHAR(9),
+    flight_type CHAR(8) NOT NULL,
+	CHECK (flight_type = 'Domestic' OR flight_type = 'Internat'),
+    flight_days VARCHAR(9) NOT NULL,
     depart DATETIME,
     arrival DATETIME,
     fare_first DOUBLE,
     fare_economy DOUBLE,
-    FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),
+    FOREIGN KEY (airline_id) REFERENCES airlines(airline_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
     PRIMARY KEY (airline_id, flight_num));
 -- add data to flights
 LOCK TABLES flights WRITE;
@@ -137,8 +149,12 @@ CREATE TABLE uses (
 	airline_id CHAR(2) NOT NULL,
 	flight_num INT NOT NULL,
     aircraft_id INT NOT NULL,
-	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num),
-    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(aircraft_id),
+	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(aircraft_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
     PRIMARY KEY (airline_id, flight_num, aircraft_id));
 -- add data to uses
 LOCK TABLES uses WRITE;
@@ -165,8 +181,12 @@ CREATE TABLE departures (
 	airline_id CHAR(2) NOT NULL,
 	flight_num INT NOT NULL,
 	airport_id CHAR(3) NOT NULL,
-	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num),
-	FOREIGN KEY (airport_id) REFERENCES airports(airport_id),
+	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (airport_id) REFERENCES airports(airport_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
 	PRIMARY KEY (airline_id, flight_num, airport_id));
 -- add data to departures
 LOCK TABLES departures WRITE;
@@ -179,8 +199,12 @@ CREATE TABLE destinations (
 	airline_id CHAR(2) NOT NULL,
 	flight_num INT NOT NULL,
 	airport_id CHAR(3) NOT NULL,
-	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num),
-	FOREIGN KEY (airport_id) REFERENCES airports(airport_id),
+	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (airport_id) REFERENCES airports(airport_id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
 	PRIMARY KEY (airline_id, flight_num, airport_id));
 -- add data to destinations
 LOCK TABLES destinations WRITE;
@@ -189,18 +213,25 @@ INSERT INTO destinations VALUES ('DL', 1, 'SLC'), ('DL', 2, 'DEL'), ('AA', 1, 'E
 UNLOCK TABLES;
 	
 -- Create trip entity
+-- NULL seat_num and aircraft mean you are on the waitlist
 CREATE TABLE trips (
 	airline_id CHAR(2) NOT NULL,
 	flight_num INT NOT NULL,
 	ticket_num INT NOT NULL,
-	aircraft_id INT NOT NULL,
-	seat_num INT NOT NULL,
+	aircraft_id INT,
+	seat_num INT,
 	meal INT(1),
-	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num),
-	FOREIGN KEY (ticket_num) REFERENCES tickets(ticket_num),
-	FOREIGN KEY (aircraft_id, seat_num) REFERENCES seats(aircraft_id, seat_num),
+	FOREIGN KEY (airline_id, flight_num) REFERENCES flights(airline_id, flight_num)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (ticket_num) REFERENCES tickets(ticket_num)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY (aircraft_id, seat_num) REFERENCES seats(aircraft_id, seat_num)
+		ON UPDATE CASCADE
+		ON DELETE SET NULL,
 	PRIMARY KEY (airline_id, flight_num, ticket_num));
 -- add data to trips
 LOCK TABLE trips WRITE;
-INSERT INTO trips VALUES ('DL', 1, 1, 27, 1, 0), ('DL', 1, 2, 27, 2, 1), ('DL', 1, 3, 27, 0, 0);
+INSERT INTO trips VALUES ('DL', 1, 1, 27, 1, 0), ('DL', 1, 2, 27, 2, 1), ('DL', 1, 3, NULL, NULL, 0);
 UNLOCK TABLES;
