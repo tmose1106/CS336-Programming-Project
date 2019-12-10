@@ -22,6 +22,6 @@
 	    }
 	%>
 	</p>
-	<button><a href="/servlet-demo/logout.jsp">Log Out</a></button>
+	<input type="button" value="Log Out" onclick="window.location='/servlet-demo/logout.jsp'" >
 </body>
 </html>
