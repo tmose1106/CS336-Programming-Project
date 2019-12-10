@@ -69,6 +69,7 @@ public class EditAirportServlet extends HttpServlet {
     			}
     			query += " airport_city = ?";
     			value[1] = 1;
+    			inserted = true;
     		}
     		value[2] = 0;
     		if(!state.equals("")) {
@@ -77,6 +78,7 @@ public class EditAirportServlet extends HttpServlet {
     			}
     			query += " airport_state = ?";
     			value[2] = 1;
+    			inserted = true;
     		}
     		value[3] = 0;
     		if(!country.equals("")) {
@@ -85,6 +87,7 @@ public class EditAirportServlet extends HttpServlet {
     			}
     			query += " airport_country = ?";
     			value[3] = 1;
+    			inserted = true;
     		}
 	    	query += " WHERE airport_id = ?;";
 	    	PreparedStatement ps = connection.prepareStatement(query);

@@ -57,7 +57,9 @@ public class AddAirportServlet extends HttpServlet {
     		PreparedStatement ps = connection.prepareStatement(
 				"INSERT INTO airports (airport_id, airport_city, airport_state, airport_country) VALUES"
 				+ "(?, ?, ?, ?);");
-
+    		if(city.equals("")) {city = null;}
+    		if(state.equals("")) {state = null;}
+    		if(country.equals("")) {country = null;}
 	    	ps.setString(1, airportID);
 	    	ps.setString(2, city);
 	    	ps.setString(3, state);
